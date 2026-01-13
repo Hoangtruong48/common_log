@@ -1,31 +1,38 @@
 package com.htruong48.common_log.config;
 
-
 import com.htruong48.common_log.aspect.ControllerLogAspect;
+import com.htruong48.common_log.aspect.TraceNameAspect;
+import com.htruong48.common_log.config.TraceFilter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(FeignTraceConfig.class)
 public class TraceAutoConfiguration {
 
-    // 1. Tự động đăng ký Filter
     @Bean
-    @ConditionalOnWebApplication // Chỉ chạy nếu là Web App
+    @ConditionalOnWebApplication
     public TraceFilter traceFilter() {
         return new TraceFilter();
     }
 
-    // 2. Tự động đăng ký Aspect log Controller
     @Bean
     public ControllerLogAspect controllerLogAspect() {
         return new ControllerLogAspect();
     }
 
-    // 3. Tự động đăng ký Feign Interceptor (Nếu service có dùng Feign)
-    // @Bean
-    // @ConditionalOnClass(feign.RequestInterceptor.class)
-    // public RequestInterceptor traceFeignInterceptor() { ... }
+    @Bean
+    public TraceNameAspect traceNameAspect() {
+        return new TraceNameAspect();
+    }
+
+    // ---> THÊM ĐOẠN NÀY VÀO CUỐI CLASS
+    // Mục đích: Chỉ khi nào tìm thấy class "feign.RequestInterceptor" thì mới Import config kia
+    @Configuration
+    @ConditionalOnClass(name = "feign.RequestInterceptor")
+    @Import(FeignTraceConfig.class)
+    static class FeignConfiguration {
+    }
 }

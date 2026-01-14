@@ -1,6 +1,5 @@
 package com.htruong48.common_log.aspect;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,6 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 @Aspect // Đánh dấu đây là một Aspect

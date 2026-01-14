@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.htruong48.common_log.config.TraceAutoConfiguration

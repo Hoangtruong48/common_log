@@ -18,7 +18,7 @@ public class FeignTraceConfig {
             if (traceId != null) {
                 // Log ra để xem nó có chạy vào đây không
 //                log.info(">> [FEIGN-INTERCEPTOR] Adding X-Trace-Id: {}", traceId);
-                template.header("X-Trace-Id", traceId);
+                template.header(StringConstant.TRACE_LOG, traceId);
             }
         };
     }
